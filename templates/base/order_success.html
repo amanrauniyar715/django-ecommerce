@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 40px; background: #f0f8ff; color: #333;">
+    <h1 style="color: #007bff; font-size: 3em; margin-bottom: 10px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+        Your order has been placed!
+    </h1>
+    <p style="font-size: 1.25em; color: #555; margin-bottom: 30px; font-weight: 500;">
+        Thank you for ordering from Urban Luggage.
+    </p>
+    {% if order_id %}
+        <p style="font-size: 1.1em; color: #333; font-weight: 500;">
+            <strong>Your Order ID:</strong> {{ order_id }}
+            
+        </p>
+    {% endif %}
+    <div>
+        <a href="{% url 'base:home' %}" style="display: inline-block; margin: 10px; padding: 12px 25px; background: #007bff; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 6px rgba(0,123,255,0.3); transition: background 0.3s ease;">Continue Shopping</a>
+    </div>
+     <a href="{% url 'base:track_order' %}" style="display: inline-block; margin: 10px; padding: 12px 25px; background: #28a745; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 6px rgba(40,167,69,0.3); transition: background 0.3s ease;">Track Your Order</a>
+    <div>
+        <a href="{% url 'base:logout' %}" style="display: inline-block; margin: 10px; padding: 12px 25px; background: #dc3545; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; box-shadow: 0 4px 6px rgba(220,53,69,0.3); transition: background 0.3s ease;">Log Out</a>
+    </div>
+   
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Company Profile</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile_card.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+
+    <!-- Profile Card -->
+    <div class="card">
+      <img src="{% static 'images/logo.png.jpg' %}" alt="UrbanLuggage" style="width:100%" />
+      <h1>UrbanLuggage</h1>
+      <p class="title">E-Commerce Online Store</p>
+      <a href="https://www.fb.com" target="_blank"
+        ><i class="fa fa-facebook"></i
+      ></a>
+      <p><button>Contact</button></p>
+    </div>
+
+    <center>
+      <br><br><br><br>
+      <button id="home_b"><a id="home" href="{% url 'base:home' %}">GO BACK</a></button>
+    </center>
+  </body>
+</html>

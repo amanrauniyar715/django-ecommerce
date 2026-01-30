@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="background:#f9fafb; padding:30px; border-radius:12px; box-shadow:0 6px 15px rgba(0,0,0,0.1);">
+    <h2 class="mb-4">Place Your Order</h2>
+
+    <div class="card p-4 shadow-sm">
+        <h4>{{ luggage.name }}</h4>
+        <p>Price: ${{ luggage.price }}</p>
+        <p>{{ luggage.description }}</p>
+
+        <form method="POST" style="max-width: 600px; margin: 0 auto; padding: 20px; background: #f9f9f9; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        {% csrf_token %}
+
+        <h2 style="text-align: center; margin-bottom: 20px;">Place Your Order</h2>
+
+        <div style="margin-bottom: 15px;">
+            <label>Luggage:</label><br>
+            <input type="text" value="{{ selected_luggage.name }}" readonly style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background-color: #eee;">
+        </div>
+
+
+        <div style="margin-bottom: 15px;">
+            <label>Quantity:</label><br>
+            {{ form.quantity }}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label>Username:</label><br>
+            {{ form.username }}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label>Email:</label><br>
+            {{ form.email }}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label>Shipping Address:</label><br>
+            {{ form.shipping_address }}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label>Status:</label><br>
+            {{ form.status }}
+        </div>
+
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #1e90ff; color: white; border: none; border-radius: 5px; font-size: 16px;">Submit Order</button>
+        </form>
+
+    </div>
+
+    {% if messages %}
+    <div class="mt-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+
+{% load static %}
+
+<!-- Product Detail Page Start -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Detail</title>
+    <style>
+    .product-detail{padding:40px 20px;max-width:900px;margin:40px auto;display:flex;gap:30px;background:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.1);border-radius:10px;font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif}.product-detail-left, .product-detail-right{flex:1;display:flex;flex-direction:column;gap:12px}.product-detail-left{justify-content:center;align-items:center}.product-detail-left img{max-width:100%;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.15)}.product-detail-right h3{font-size:2rem;margin-bottom:10px;color:#222}.product-detail-right h5{font-weight:600;color:#555}.product-detail-right p{margin-top:15px;line-height:1.5;color:#444}.addtocart, .writereview, .buynow{display:inline-block;padding:10px 18px;margin-top:15px;border-radius:5px;font-weight:600;text-decoration:none;transition:background-color 0.3s,color 0.3s;cursor:pointer}.addtocart{background:#ff6f61;color:#fff;margin-right:10px}.addtocart:hover{background:#e65b50}.writereview{background:#f0f0f0;color:#555;margin-right:10px}.writereview:hover{background:#ddd}.buynow{background:#28a745;color:#fff}.buynow:hover{background:#218838}
+    </style>
+</head>
+<body>
+
+<div class="product-detail">
+    <div class="container">
+        <div class="product-detail-left">
+            <img src="{{ lugg.image.url }}" alt="{{ lugg.name }}" style="max-width: 50%;">
+        </div>
+        <div class="product-detail-right">
+            <h3>{{ lugg.name }} </h3>
+            <h5><b>Price:</b> <i class="fas fa-rupee-sign"></i> {{ lugg.price }}</h5>
+            
+            <h5><b>Delivery of the city:</b> Free</h5>
+            <h5><b>Payment:</b> Esewa, Khalti, Fonepay</h5>
+            <h5><b>Availability:</b> In Stock</h5>
+            <p>{{ lugg.desc }}</p>
+
+            <form method="post" action="{% url 'base:add-to-cart' lugg.id %}">
+                {% csrf_token %}
+                <button type="submit" class="addtocart">
+                    <i class="fas fa-heart"></i> Add to Cart
+                </button>
+            </form>
+            {% comment %} <a href="#" class="writereview"><i class="fas fa-pen"></i> Write a review</a> {% endcomment %}
+            <a href="{% url 'base:checkout' lugg.id %}" class="buynow"><i class="fas fa-shopping-cart"></i> Buy Now</a>
+            <button id="home_b"><a id="home" href="{% url 'base:home' %}">GO BACK</a></button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<!-- Product Detail Page End -->
+
+
+
+

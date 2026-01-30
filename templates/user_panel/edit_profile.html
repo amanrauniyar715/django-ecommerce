@@ -1,0 +1,139 @@
+{% extends 'user_panel/base.html' %}
+
+{% block user_content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="card-title mb-0">Edit Profile</h5>
+    </div>
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h6 class="mb-3">Personal Information</h6>
+                    
+                    <div class="mb-3">
+                        <label for="{{ user_form.first_name.id_for_label }}" class="form-label">First Name</label>
+                        {{ user_form.first_name }}
+                        {% if user_form.first_name.errors %}
+                            <div class="text-danger">
+                                {{ user_form.first_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ user_form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                        {{ user_form.last_name }}
+                        {% if user_form.last_name.errors %}
+                            <div class="text-danger">
+                                {{ user_form.last_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ user_form.email.id_for_label }}" class="form-label">Email</label>
+                        {{ user_form.email }}
+                        {% if user_form.email.errors %}
+                            <div class="text-danger">
+                                {{ user_form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6 class="mb-3">Contact Information</h6>
+                    
+                    <div class="mb-3">
+                        <label for="{{ profile_form.phone_number.id_for_label }}" class="form-label">Phone Number</label>
+                        {{ profile_form.phone_number }}
+                        {% if profile_form.phone_number.errors %}
+                            <div class="text-danger">
+                                {{ profile_form.phone_number.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ profile_form.address.id_for_label }}" class="form-label">Address</label>
+                        {{ profile_form.address }}
+                        {% if profile_form.address.errors %}
+                            <div class="text-danger">
+                                {{ profile_form.address.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="{{ profile_form.city.id_for_label }}" class="form-label">City</label>
+                        {{ profile_form.city }}
+                        {% if profile_form.city.errors %}
+                            <div class="text-danger">
+                                {{ profile_form.city.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ profile_form.state.id_for_label }}" class="form-label">State/Province</label>
+                        {{ profile_form.state }}
+                        {% if profile_form.state.errors %}
+                            <div class="text-danger">
+                                {{ profile_form.state.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="{{ profile_form.zip_code.id_for_label }}" class="form-label">ZIP/Postal Code</label>
+                        {{ profile_form.zip_code }}
+                        {% if profile_form.zip_code.errors %}
+                            <div class="text-danger">
+                                {{ profile_form.zip_code.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ profile_form.country.id_for_label }}" class="form-label">Country</label>
+                        {{ profile_form.country }}
+                        {% if profile_form.country.errors %}
+                            <div class="text-danger">
+                                {{ profile_form.country.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="{{ profile_form.profile_picture.id_for_label }}" class="form-label">Profile Picture</label>
+                {{ profile_form.profile_picture }}
+                {% if profile_form.profile_picture.errors %}
+                    <div class="text-danger">
+                        {{ profile_form.profile_picture.errors }}
+                    </div>
+                {% endif %}
+                {% if user_profile.profile_picture %}
+                    <div class="mt-2">
+                        <img src="{{ user_profile.profile_picture.url }}" alt="Current Profile Picture" class="img-thumbnail" style="max-width: 150px;">
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

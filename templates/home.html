@@ -1,0 +1,405 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'partials/head.html' %}
+
+<body>
+
+    {% include 'partials/header.html' %}
+
+
+	<!-- Banner Start -->
+	<div class="banner">
+		<div class="container">
+			<img src="{% static 'images/banner1.jpg' %}" alt="Banner">
+		</div>
+	</div>
+
+	<!-- Banner End -->
+
+	<!-- Product Area Start -->
+	 <div class="product-area">
+		<div class="container">
+			<h3>Top Selling Products</h3>
+			<div style="display: flex; gap: 20px; overflow-x: auto; padding: 10px;">
+				{% for luggage in luggages %}
+				<div style="border: 1px solid #ccc; border-radius: 8px; padding: 10px; min-width: 220px; background: #f9f9f9; text-align: center;">
+					<form method="post" action="{% url 'base:add-to-cart' luggage.id %}">
+						{% csrf_token %}
+						<button type="submit" style="margin-top: 10px; padding: 8px 12px; background-color: #ff6f61; color: white; border: none; border-radius: 4px; cursor: pointer;">
+							Add to Cart
+						</button>
+					</form>
+					
+					{% if luggage.image %}
+					<img src="{{ luggage.image.url }}" alt="{{ luggage.name }}" 
+						style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+			   	
+					{% endif %}
+					<h3>{{ luggage.name }}</h3>
+					<p>{{ luggage.description }}</p>
+					<p><strong>Price:</strong> ${{ luggage.price }}</p>
+					<p><strong>On Offer:</strong> {{ luggage.offer|yesno:"Yes,No" }}</p>
+				</div>
+				<a href="{% url 'base:product-detail' luggage.id %}">
+					<button style="margin-bottom: 10px; padding: 8px 12px; background-color:rgb(18, 18, 17); color: white; border: none; border-radius: 4px;">
+						Buy Now
+					</button>
+				</a>
+				{% empty %}
+					<p>No luggage items found.</p>
+				{% endfor %}
+			</div>
+			
+				
+			<h3>New 2025 Fresh Stock</h3>
+			
+			<div style="display: flex; overflow-x: auto; gap: 16px; padding: 10px; white-space: nowrap;">
+				{% for newLuggage in new %}
+					<div style="flex: 0 0 auto; border: 1px solid #ccc; border-radius: 8px; padding: 10px; width: 220px; background: #f9f9f9; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+						<form method="post" action="{% url 'base:add-to-cart' newLuggage.id %}">
+							{% csrf_token %}
+							<button type="submit" style="margin-top: 8px; padding: 8px 12px; background-color: #ff6f61; color: white; border: none; border-radius: 4px;">
+								Add to Cart
+							</button>
+						</form>
+							 
+						{% if newLuggage.image %}
+							<img src="{{ newLuggage.image.url }}" alt="{{ newLuggage.name }}" 
+								 style="width: 200px; height: 200px; object-fit: cover; border-radius: 5px;">
+						{% endif %}
+						
+						<div>
+							<h3>{{ newLuggage.name }}</h3>
+						</div>
+			
+						<a href="{% url 'base:product-detail' newLuggage.id %}" 
+						   style="margin-top: 10px; padding: 8px 12px; background-color: rgb(18, 18, 17); color: white; border: none; border-radius: 4px; text-decoration: none; display: inline-block;">
+							View Product
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+			
+
+	<!-- Greatest Offer News Start -->
+	<div class="news">
+		<div class="container">
+			<h3>Greatest Offer News</h3>
+			<div class="owl-carousel">
+				<div class="item"><img src="{% static 'images/product-img1.jpg' %}"></div>
+				<div class="item"><img src="{% static 'images/product-img2.jpg' %}"></div>
+				<div class="item"><img src="{% static 'images/product-img3.jpg' %}"></div>
+				<div class="item"><img src="{% static 'images/product-img4.jpg' %}"></div>
+				<div class="item"><img src="{% static 'images/product-img2.jpg' %}"></div>
+			</div>
+		</div>
+	</div>
+	<!-- Greatest Offer News End -->
+
+
+	<!-- Support Section start-->
+	<div class="support">
+		<div class="container">
+			<a href="#">
+				<img src="{% static 'images/icon1.png' %}">
+				<h5>Fast Delivery</h5>
+			</a>
+			<a href="#">
+				<img src="{% static 'images/icon2.png' %}">
+				<h5>Support 24 Hours</h5>
+			</a>
+			<a href="#">
+				<img src="{% static 'images/icon3.png' %}">
+				<h5>Easy Payment Method</h5>
+			</a>
+			<a href="#">
+				<img src="{% static 'images/icon4.png' %}">
+				<h5>Sell on e-store</h5>
+			</a>
+		</div>
+	</div>
+	<!-- Support Section end-->
+
+
+	<!-- Footer Start -->
+<div class="footer">
+		 <div class="container">
+			<div class="col-3">
+				<p><big>Address IN:</big><br>Surajaarcade B20, Makkhan galli, NewRoad</p>
+			</div>
+			<div class="col-3">
+				<ul>
+					<li><a href="#">Contact Anywhere</a></li>
+					<li><a href="#">Easy payment Method</a></li>
+					<li><a href="#">Fast Shipping</a></li>
+					<li><a href="#">Our New Brand</a></li>
+					<li><a href="#">Catalog</a></li>
+				</ul>
+			</div>
+			<div class="col-3">
+				<ul>
+					<li><a href="{% url 'base:contact' %}" target="_blank">About us</a></li>
+					<li><a href="#">Our Partner</a></li>
+					<li><a href="#">Terms of use</a></li>
+
+				</ul>
+			</div>
+			<div class="col-3">
+				<ul>
+					<li><a href="#">Warranty</a></li>
+					<li><a href="#">Check in</a></li>
+					<li><a href="#">How to place order</a></li>
+					<li><a href="#">Exchange and return</a></li>
+					<!-- <li><a href="#">Installation</a></li> -->
+					<li><a href="#">Quality of services</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
+
+
+	<div class="copyright">
+		<div class="container">
+			<h5>&copy; 2020 UrbanLuggage.com | Created by Aman Rauniyar</h5>
+		</div>
+	</div>
+
+  
+  <!-- Chatbot Button -->
+  <button id="chatbot-btn" 
+          style="
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            font-size: 24px;
+            z-index: 9999;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+          "
+          title="Chat with us">
+    💬
+  </button>
+
+  <!-- Chat Window -->
+  <div id="chatbot-window" 
+       style="
+         display: none;
+         position: fixed;
+         bottom: 90px;
+         right: 20px;
+         width: 320px;
+         height: 400px;
+         background: white;
+         border-radius: 10px;
+         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+         z-index: 10000;
+         flex-direction: column;
+         font-family: Arial, sans-serif;
+       ">
+    <div style="background: #ff6f61; color: white; padding: 12px; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; align-items: center;">
+      <strong>Chatbot</strong>
+      <button id="chatbot-close-btn" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+    </div>
+
+    <div id="chatbot-messages" 
+         style="flex: 1; padding: 10px; overflow-y: auto; background: #f9f9f9;">
+      <p style="color: gray; font-style: italic;">Hello! How can I help you today?</p>
+    </div>
+
+    <form id="chatbot-form" style="display: flex; border-top: 1px solid #ddd;">
+      <input type="text" id="chatbot-input" placeholder="Type your message..." 
+             style="flex: 1; padding: 10px; border: none; border-radius: 0 0 0 10px;" autocomplete="off"/>
+      <button type="submit" 
+              style="background: #ff6f61; color: white; border: none; padding: 0 15px; border-radius: 0 0 10px 0; cursor: pointer;">
+        Send
+      </button>
+    </form>
+  </div>
+
+
+<!-- Jquery V.3.3.1 -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/jquery.cycle.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script>
+	$("#sliderShuffle").cycle({
+		next: '#next',
+		prev: '#prev'
+	});
+
+	$('.owl-carousel').owlCarousel({
+		items:4,
+		loop:true,
+		margin:15,
+		autoplay:true,
+		autoplayTimeout:3000, //3 Second
+		nav:true,
+		responsiveClass:true,
+		responsive:{
+			0:{
+				items:1,
+				nav:true
+			},
+			600:{
+				items:3,
+				nav:true
+			},
+			1000:{
+				items:4,
+				nav:true
+			}
+		}
+
+	});
+
+	$(function(){
+		$(".topbar ul li").click(function(){
+			$(".topbar ul li").not(this).find("ul").slideUp();
+			$(this).find("ul").slideToggle();
+		});
+		$(".topbar ul li ul li, productCategories ul li .megamenu").click(function(e){
+			e.stopPropagation();
+		});
+		$(".productCategories ul li").click(function(){
+			$(".productCategories ul li").not(this).find(".megamenu").hide();
+			$(this).find(".megamenu").toggle();
+		});
+		$(".otherInfoBody").hide();
+		$(".otherInfoHandle").click(function(){
+			$(".otherInfoBody").slideToggle();
+		});
+		$(".signBtn").click(function(){
+			$("body").css("overflow", "hidden");
+			$(".loginBox").slideDown();
+		});
+		$(".closeBtn").click(function(){
+			$("body").css("overflow", "visible");
+			$(".loginBox").slideUp();
+		});
+		$(".productViewBtn").click(function(e){
+			e.preventDefault();
+			$("body").css("overflow", "hidden");
+			$(".productViewBox").slideDown();
+		});
+		$(".productViewBox-closeBtn").click(function(){
+			$("body").css("overflow", "visible");
+			$(".productViewBox").slideUp();
+		});
+	});
+
+  // ====== Chatbot JS with product Q&A ======
+  // Pass product data from Django context to JS
+  const products = [
+    {% for luggage in luggages %}
+    {
+      id: {{ luggage.id }},
+      name: "{{ luggage.name|escapejs }}",
+      price: "{{ luggage.price }}",
+      description: "{{ luggage.description|escapejs }}",
+      offer: {{ luggage.offer|yesno:"true,false" }},
+    },
+    {% endfor %}
+  ];
+
+  const chatbotBtn = document.getElementById('chatbot-btn');
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const chatbotCloseBtn = document.getElementById('chatbot-close-btn');
+  const chatbotForm = document.getElementById('chatbot-form');
+  const chatbotInput = document.getElementById('chatbot-input');
+  const chatbotMessages = document.getElementById('chatbot-messages');
+
+  chatbotBtn.addEventListener('click', () => {
+    chatbotWindow.style.display = 'flex';
+    chatbotBtn.style.display = 'none';
+  });
+
+  chatbotCloseBtn.addEventListener('click', () => {
+    chatbotWindow.style.display = 'none';
+    chatbotBtn.style.display = 'block';
+  });
+
+  chatbotForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const userMessage = chatbotInput.value.trim();
+    if (!userMessage) return;
+
+    addUserMessage(userMessage);
+    chatbotInput.value = '';
+
+    setTimeout(() => {
+      const botReply = generateBotReply(userMessage);
+      addBotMessage(botReply);
+    }, 800);
+  });
+
+  function addUserMessage(text) {
+    const userMsgElem = document.createElement('p');
+    userMsgElem.style.textAlign = 'right';
+    userMsgElem.style.background = '#ff6f61';
+    userMsgElem.style.color = 'white';
+    userMsgElem.style.padding = '6px 10px';
+    userMsgElem.style.borderRadius = '12px';
+    userMsgElem.style.margin = '5px 0';
+    userMsgElem.textContent = text;
+    chatbotMessages.appendChild(userMsgElem);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  function addBotMessage(text) {
+    const botMsgElem = document.createElement('p');
+    botMsgElem.style.textAlign = 'left';
+    botMsgElem.style.background = '#e1e1e1';
+    botMsgElem.style.color = '#333';
+    botMsgElem.style.padding = '6px 10px';
+    botMsgElem.style.borderRadius = '12px';
+    botMsgElem.style.margin = '5px 0';
+    botMsgElem.textContent = text;
+    chatbotMessages.appendChild(botMsgElem);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  function generateBotReply(message) {
+    const msg = message.toLowerCase();
+
+    for (const product of products) {
+      if (msg.includes(product.name.toLowerCase())) {
+        if (msg.includes('price')) {
+          return `The price of ${product.name} is $${product.price}.`;
+        }
+        if (msg.includes('offer') || msg.includes('discount')) {
+          return product.offer ? 
+            `Yes! ${product.name} is currently on offer.` :
+            `Sorry, ${product.name} is not on offer right now.`;
+        }
+        if (msg.includes('quality')) {
+          return `${product.name} is described as: "${product.description}". We take pride in the quality of our products!`;
+        }
+        return `What would you like to know about ${product.name}? You can ask about price, quality, or offers.`;
+      }
+    }
+
+    if (msg.includes('price')) {
+      return 'Please specify the product name you want the price for.';
+    }
+    if (msg.includes('offer') || msg.includes('discount')) {
+      return 'Please specify which product you want to check offers for.';
+    }
+    if (msg.includes('quality')) {
+      return 'Please specify which product you want to know about the quality.';
+    }
+
+    return "Sorry, I didn't understand that. You can ask me about the price, quality, or offers of our products.";
+  }
+</script>
+</body>
+</html>

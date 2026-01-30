@@ -1,0 +1,75 @@
+{% load static %}
+	<!-- Topbar Start -->
+	<div class="topbar">
+		<div class="container">
+
+			<!-- Top Left -->
+			<div class="topleft">
+				<ul>
+					<li><a href="#">NRS<i class="fas fa-caret-down"></i></a>
+						<!-- <ul>
+							<li><a href="index_usd.html">USD</a></li>
+						</ul> -->
+					</li>
+				</ul>
+			</div>
+
+			<!-- Top Center -->
+			<div class="topcenter">
+				<ul>
+					<li><a href="{% url 'base:home' %}">Home</a></li>
+					<li><a href="{% url 'base:contact' %}" target="_blank">Contact Us</a></li>
+					<li><a href="{% url 'base:profile' %}" target="_blank">Company Profile</a></li>
+				</ul>
+			</div>
+
+			<!-- Top Right -->
+			<div class="topright">
+				<ul>
+					<li><a href="#"><i class="fas fa-phone"></i> +977 9846692447</a></li>
+					<li><a href="#"><i class="fas fa-user"></i> My Profile <i class="fas fa-caret-down"></i></a>
+						<ul class="myprofile-dropdown">
+							<li><a href="{% url 'base:cart' %}" target="_blank">My Cart</a></li>
+							<li><a href="{% url 'base:cart' %}" target="_blank">Delivered Order</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Topbar End -->
+
+
+
+	<!-- Header Start -->
+	<div class="header">
+		<div class="container">
+			<div class="logo">
+				<img width="250" height="150" src="{% static 'images/logo.png.jpg' %}">
+			</div>
+			<div class="searchbar">
+				<form>
+					<input type="search" class="searchField" placeholder="Search for products & brands">
+				</form>
+			</div>
+			<div class="headerright">
+				<ul>
+					<!-- <li><a href="#"><i class="fas fa-heart"></i> Wishlist</a></li> -->
+					<li><a href="{% url 'base:cart' %}" target="_blank"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+					<li><a href="{% url 'base:track_order' %}" >Track Your Order</a></li>
+					<li>{% if user.is_authenticated %}
+    					<a href="{% url 'base:logout' %}">Logout</a>
+						{% else %}
+    					<a href="{% url 'base:login' %}">Login</a>
+						{% endif %}
+					</li>
+					<li>
+					{% if user.is_authenticated %}
+    					<a href="{% url 'base:order_history' %}">My Orders</a>
+					{% endif %}
+					</li>
+				</ul> 
+			</div>
+		</div>
+	</div>
+	<!-- Header End -->

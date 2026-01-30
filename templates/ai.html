@@ -1,0 +1,27 @@
+<div id="chatbot-box" style="position:fixed; bottom:20px; right:20px; width:300px; background:#f4f4f4; border:1px solid #ccc; border-radius:10px; padding:10px;">
+  <div id="chat-display" style="height:200px; overflow-y:auto; margin-bottom:10px; font-size:14px;"></div>
+  <input id="chat-input" type="text" placeholder="Ask me..." style="width:75%;">
+  <button onclick="sendMessage()" style="width:20%;">Send</button>
+</div>
+
+<script>
+  async function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const chat = document.getElementById('chat-display');
+    const userMsg = input.value.trim();
+    if (!userMsg) return;
+
+    chat.innerHTML += `<div><b>You:</b> ${userMsg}</div>`;
+
+    const res = await fetch('/api/chat/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: userMsg})
+    });
+
+    const data = await res.json();
+    chat.innerHTML += `<div><b>Bot:</b> ${data.reply}</div>`;
+    chat.scrollTop = chat.scrollHeight;
+    input.value = '';
+  }
+</script>

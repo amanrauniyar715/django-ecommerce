@@ -1,0 +1,319 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Checkout Page</title>
+	<!-- Font Awesome, Style -->
+	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %} ">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.min.css' %} ">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/smoothproducts.css' %} ">
+</head>
+<body>
+	<!-- Topbar Start -->
+<div class="topbar">
+		<div class="container">
+	
+			<!-- Top Left -->
+			<div class="topleft">
+				<ul>
+					<li><a href="#">NRS <i class="fas fa-caret-down"></i></a>
+					</li>
+				</ul>
+			</div>
+	
+	
+			
+			<div class="topright">
+				<ul>
+					<li><a href="#"><i class="fas fa-phone"></i> +977 9846692447</a></li>
+					<li><a href="#"><i class="fas fa-user"></i> My Profile <i class="fas fa-caret-down"></i></a>
+						<ul class="myprofile-dropdown">
+							<li><a href="#">My Cart</a></li>
+							<li><a href="#">Delivered Order</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Topbar End -->
+	
+	
+	<!-- Header Start -->
+	<div class="header">
+		<div class="container">
+			<div class="logo">
+				<img width="300" height="150" src="{% static 'images/logo.png.jpg' %}">
+			</div>
+			<div class="searchbar">
+				<form>
+					<input type="search" class="searchField" placeholder="Search for products & brands">
+				</form>
+			</div>
+			<div class="headerright">
+				<ul>
+					<!-- <li><a href="#"><i class="fas fa-heart"></i> Wishlist</a></li> -->
+					<li><a href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+					<li>{% if user.is_authenticated %}
+    					<a href="{% url 'base:logout' %}">Logout</a>
+						{% else %}
+    					<a href="{% url 'base:login' %}">Login</a>
+						{% endif %}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Header End -->
+	
+
+	<!-- Checkout Start -->
+	<div class="checkout">
+		<div class="container">
+			<h2>Your Order</h2>
+
+			<!-- Checkout Inner Start -->
+			<script>
+				function done() {
+					alert("Order Successfully Placed !!")
+				}
+			</script>
+			
+			<div class="checkout-inner">
+				{% comment %} <form onsubmit="done()">
+					
+					<div class="checkout-form-steps">
+						<h4>Personal Detail</h4>
+						<input type="text" class="textfield" placeholder="Your Name" required="">
+						<input type="email" class="textfield" placeholder="Your Email">
+						<input type="text" class="textfield" placeholder="Your Phone No.">
+					</div>
+					
+					<div class="checkout-form-steps">
+						<h4>Shipping Address</h4>
+						
+						<input type="text" class="textfield" placeholder="Full Address">
+					</div>
+					<div class="checkout-form-steps">
+						<h4>Shipping Options</h4>
+						<label for="radio1">
+							<input type="radio" name="shippingoptions" id="radio1">
+							Delivery by courier - during the day free shipping
+						</label>
+						<label for="radio2">
+							<input type="radio" name="shippingoptions" id="radio2">
+							Urgent Delivery - delivery in 1 hour free shipping
+						</label>
+						<label for="radio3">
+							<input type="radio" name="shippingoptions" id="radio3">
+							Pickup - you can pickup 9AM to 8PM
+						</label>
+					</div>
+					<div class="checkout-form-steps">
+						<h4>Billing Options</h4>
+						<label for="radio4">
+							<input type="radio" name="billingoptions" id="radio4">
+							In Cash
+						</label>
+						<label for="radio5">
+							<input type="radio" name="billingoptions" id="radio5">
+							Visa
+						</label>
+						<label for="radio6">
+							<input type="radio" name="billingoptions" id="radio6">
+							Mobile Banking
+						</label>
+						<label for="radio7">
+							<input type="radio" name="billingoptions" id="radio7">
+							Wallet
+						</label>
+					</div>
+					<input type="submit" class="submitorder-button" value="Submit Order">
+					<button id="home_b"><a id="home" href="{% url 'base:home' %}">GO BACK</a></button>
+				</form> {% endcomment %}
+				
+			<div style="max-width: 600px; margin: 40px auto; padding: 30px; background: #ffffff; border-radius: 12px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', sans-serif;">
+			<h2 style="text-align: center; margin-bottom: 25px; color: #333;">Checkout</h2>
+
+			<form method="POST" action="{% url 'base:place_order' lugg.id %}" style="display: flex; flex-direction: column;">
+				{% csrf_token %}
+
+				<label for="product" style="margin: 15px 0 5px; font-weight: 600; color: #444;">Product ID:</label>
+				<p style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px;">{{ lugg.id }}</p>
+				<input type="hidden" name="product_id" value="{{ lugg.id }}">
+
+				<label for="product" style="margin: 15px 0 5px; font-weight: 600; color: #444;">Product Name:</label>
+				<p style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px;">{{ lugg.name }}</p>
+
+
+				<label for="username" style="margin: 15px 0 5px; font-weight: 600; color: #444;">Name:</label>
+				<input type="text" name="username" value="{{ request.user.username }}" required style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px;">
+
+				<label for="email" style="margin: 15px 0 5px; font-weight: 600; color: #444;">Email:</label>
+				<input type="email" name="email" value="{{ request.user.email }}" required style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px;">
+
+				<label for="quantity" style="margin: 15px 0 5px; font-weight: 600; color: #444;">Quantity:</label>
+				<input type="number" name="quantity" value="1" min="1" required style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px;">
+
+				<label for="shipping_address" style="margin: 15px 0 5px; font-weight: 600; color: #444;">Shipping Address:</label>
+				<textarea name="shipping_address" rows="4" required style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px;"></textarea>
+
+				<button type="submit" style="padding: 12px; margin-top: 25px; background-color: #0d6efd; color: white; font-size: 16px; border: none; border-radius: 8px; cursor: pointer;">Place Order</button>
+			</form>
+
+			<p style="text-align: center; color: #777; font-size: 14px; margin-top: 10px;">Thank you for shopping with Urban Luggage!</p>
+			</div>
+			
+
+
+			</div>
+			<!-- Checkout Inner End -->
+			
+			
+			<!-- Order List Start-->
+			
+			{% for luggage in luggages %}
+				<div class="orderlist">
+					<a href="{% url 'base:product-detail' luggage.id %}">
+						<img src="{{ luggage.image.url }}" alt="{{ luggage.name }}">
+						<h3>{{ luggage.name }}</h3>
+					</a>
+				<h3>Luggage</h3>
+				<p>Quantity : <span>1</span></p>
+				<p>Price : <span><i class="fas fa-rupees-sign"></i> 1{{luggage.price}}</span></p>
+				
+				<p>Order Total : <span><i class="fas fa-rupees-sign"></i> {{luggage.price}}</span></p>
+			</div>
+			
+			{% endfor %}
+
+
+			<!-- Order List End-->
+
+
+		</div>
+	</div>
+	<!-- Checkout End -->
+
+	<!-- Footer Start -->
+<div class="footer">
+		<div class="container">
+			<div class="col-3">
+				<p><big>Address IN:</big><br>Surajaarcade B20, Makkhan galli, NewRoad, Kathmandu</p>
+			</div>
+			<div class="col-3">
+				<ul>
+					<li><a href="#">Contact Anywhere</a></li>
+					<li><a href="#">Easy payment Method</a></li>
+					<li><a href="#">Fast Shipping</a></li>
+					<li><a href="#">Our New Brand</a></li>
+					<li><a href="#">Catalog</a></li>
+				</ul>
+			</div>
+			<div class="col-3">
+				<ul>
+					<li><a href="contactus.html" target="_blank">About us</a></li>
+					
+					<li><a href="#">Our Partner</a></li>
+					<li><a href="#">Terms of use</a></li>
+					
+				</ul>
+			</div>
+			<div class="col-3">
+				<ul>
+					<li><a href="#">Warranty</a></li>
+					<li><a href="#">Check in</a></li>
+					<li><a href="#">How to place order</a></li>
+					<li><a href="#">Exchange and return</a></li>
+					<li><a href="#">Installation</a></li>
+					<li><a href="#">Quality of services</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!-- Footer End -->
+
+	
+	<div class="copyright">
+		<div class="container">
+			<h5>&copy; UrbanLuggage | Created by Aman Rauniyar</h5>
+		</div>
+	</div>
+	
+
+<!-- Jquery V.3.3.1 -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>
+<script src="{% static 'js/jquery.cycle.js' %} "></script>
+<script src="{% static 'js/owl.carousel.min.js' %} "></script>
+<script src="{% static 'js/smoothproducts.min.js' %} "></script>
+<script>
+	$("#sliderShuffle").cycle({
+		next: '#next',
+		prev: '#prev'
+	});
+	
+	$('.owl-carousel').owlCarousel({
+		items:4,
+		loop:true,
+		margin:15,
+		autoplay:true,
+		autoplayTimeout:3000, //3 Second
+		nav:true,
+		responsiveClass:true,
+		responsive:{
+			0:{
+				items:1,
+				nav:true
+			},
+			600:{
+				items:3,
+				nav:true
+			},
+			1000:{
+				items:4,
+				nav:true
+			}
+		}
+
+	});
+
+	$(function(){
+		$(".topbar ul li").click(function(){
+			$(".topbar ul li").not(this).find("ul").slideUp();
+			$(this).find("ul").slideToggle();
+		});
+		$(".topbar ul li ul li, productCategories ul li .megamenu").click(function(e){
+			e.stopPropagation();	
+		});
+		$(".productCategories ul li").click(function(){
+			$(".productCategories ul li").not(this).find(".megamenu").hide();
+			$(this).find(".megamenu").toggle();
+		});
+		$(".otherInfoBody").hide();
+		$(".otherInfoHandle").click(function(){
+			$(".otherInfoBody").slideToggle();
+		});
+		$(".signBtn").click(function(){
+			$("body").css("overflow", "hidden");
+			$(".loginBox").slideDown();
+		});
+		$(".closeBtn").click(function(){
+			$("body").css("overflow", "visible");
+			$(".loginBox").slideUp();
+		});
+		$(".productViewBtn").click(function(e){
+			e.preventDefault();
+			$("body").css("overflow", "hidden");
+			$(".productViewBox").slideDown();
+		});
+		$(".productViewBox-closeBtn").click(function(){
+			$("body").css("overflow", "visible");
+			$(".productViewBox").slideUp();
+		});
+
+		$(".sp-wrap").smoothproducts();
+	});
+</script>
+</body>
+</html>

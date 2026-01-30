@@ -1,0 +1,194 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Cart</title>
+    <style>
+        .shop_table.cart {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+    </style>
+
+
+    <!-- Load FontAwesome from static files -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive2.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.min.css' %}">
+  </head>
+
+  <body>
+
+  {% include 'partials/header.html' %}
+
+<div style="display: flex; gap: 20px; overflow-x: auto; padding: 10px;">
+  {% for item in cart_items %}
+    <div style="min-width: 180px; text-align: center; border: 1px solid #ddd; padding: 10px; flex-shrink: 0;">
+      <!-- Product image -->
+      <a href="#"><img src="{{ item.product.image.url }}" width="250" height="145" class="shop_thumbnail"></a>
+
+      <!-- Product name -->
+      <div class="product-name" style="margin-top: 10px;">
+        <a href="#">{{ item.product.name }}</a>
+      </div>
+
+      <!-- Price -->
+      <div class="product-price" style="margin-top: 5px;">
+        Price: <span class="amount">{{ item.product.price|floatformat:2 }}</span>
+      </div>
+
+      <!-- Quantity -->
+      <div class="product-quantity" style="margin-top: 5px;">
+        <div class="quantity buttons_added">
+          <input type="button" class="minus" value="-">
+          <input type="number" name="quantity_{{ item.id }}" value="1" min="1" style="width: 50px;">
+          <input type="button" class="plus" value="+">
+        </div>
+      </div>
+
+      <!-- Delete button -->
+      <form action="{% url 'base:cart_delete' item.id %}" method="post" style="margin-top: 10px;">
+        {% csrf_token %}
+        <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+          Delete
+        </button>
+      </form>
+    </div>
+  {% empty %}
+    <p>Your cart is empty.</p>
+  {% endfor %}
+</div>
+<form action="{% url 'base:submit_order' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Place Order</button>
+</form>
+
+
+
+
+
+
+    <!-- Footer Start -->
+    <div class="footer">
+        <div class="container">
+            <div class="col-3">
+                <p><big>Address IN:</big><br>Surajaarcade B20, Makkhan galli, NewRoad, Kathmandu</p>
+            </div>
+            <div class="col-3">
+                <ul>
+                    <li><a href="#">Contact Anywhere</a></li>
+                    <li><a href="#">Easy payment Method</a></li>
+                    <li><a href="#">Fast Shipping</a></li>
+                    <li><a href="#">Our New Brand</a></li>
+                    <li><a href="#">Catalog</a></li>
+                </ul>
+            </div>
+            <div class="col-3">
+                <ul>
+                    <li><a href="{% url 'base:contact' %}" target="blank">About us</a></li>
+                    <li><a href="#">Our Partner</a></li>
+                    <li><a href="#">Terms of use</a></li>
+                </ul>
+            </div>
+            <div class="col-3">
+                <ul>
+                    <li><a href="#">Warranty</a></li>
+                    <li><a href="#">Check in</a></li>
+                    <li><a href="#">How to place order</a></li>
+                    <li><a href="#">Exchange and return</a></li>
+                    <li><a href="#">Quality of services</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <div class="copyright">
+        <div class="container">
+            <h5>&copy; UrbanLuggage| Created by Aman Rauniyar</h5>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.sticky.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery.cycle.js' %}"></script>
+    <script>
+        $("#sliderShuffle").cycle({
+            next: '#next',
+            prev: '#prev'
+        });
+
+        $('.owl-carousel').owlCarousel({
+            items:4,
+            loop:true,
+            margin:15,
+            autoplay:true,
+            autoplayTimeout:3000, //3 Second
+            nav:true,
+            responsiveClass:true,
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true
+                },
+                600:{
+                    items:3,
+                    nav:true
+                },
+                1000:{
+                    items:4,
+                    nav:true
+                }
+            }
+        });
+
+        $(function(){
+            $(".topbar ul li").click(function(){
+                $(".topbar ul li").not(this).find("ul").slideUp();
+                $(this).find("ul").slideToggle();
+            });
+            $(".topbar ul li ul li, productCategories ul li .megamenu").click(function(e){
+                e.stopPropagation();
+            });
+            $(".productCategories ul li").click(function(){
+                $(".productCategories ul li").not(this).find(".megamenu").hide();
+                $(this).find(".megamenu").toggle();
+            });
+            $(".otherInfoBody").hide();
+            $(".otherInfoHandle").click(function(){
+                $(".otherInfoBody").slideToggle();
+            });
+            $(".signBtn").click(function(){
+                $("body").css("overflow", "hidden");
+                $(".loginBox").slideDown();
+            });
+            $(".closeBtn").click(function(){
+                $("body").css("overflow", "visible");
+                $(".loginBox").slideUp();
+            });
+            $(".productViewBtn").click(function(e){
+                e.preventDefault();
+                $("body").css("overflow", "hidden");
+                $(".productViewBox").slideDown();
+            });
+            $(".productViewBox-closeBtn").click(function(){
+                $("body").css("overflow", "visible");
+                $(".productViewBox").slideUp();
+            });
+        });
+    </script>
+  </body>
+</html>
